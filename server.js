@@ -1,16 +1,28 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
+const dotenv = require('dotenv');
+const path = require('path');
 
-const { initializeDb } = require('./src/utils/dbInit');
-const fighterRoutes = require("./src/routes/fighterRoutes");
+// Load environment variables based on NODE_ENV
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env';
+dotenv.config({ path: path.resolve(__dirname, envFile) });
+
+console.log(`Environment: ${process.env.NODE_ENV}`);
+
+const fighters = require("./src/routes/userRoutes");
+const dbInit = require('./src/utils/dbInit');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use("/api/fighters", fighterRoutes);
+// API routes
+app.use("/api/fighters", fighters);
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', environment: process.env.NODE_ENV });
+});
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
@@ -18,18 +30,16 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Something went wrong!" });
 });
 
-const PORT = process.env.PORT || 5000;
-
-// Start server after database initialization
+// Initialize database and start server
 const startServer = async () => {
   try {
-    // Initialize database
-    await initializeDb();
+    // Ensure database is initialized
+    await dbInit.initializeDb();
     
-    // Start server
+    const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   } catch (error) {
-    console.error('Failed to start server:', error);
+    console.error("Failed to start server:", error);
     process.exit(1);
   }
 };

@@ -1,32 +1,26 @@
 const { Pool } = require('pg');
-const path = require('path');
 const dotenv = require('dotenv');
+const path = require('path');
 
-// Load environment variables from .env file
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env';
+dotenv.config({ path: path.resolve(__dirname, '../../', envFile) });
 
-// Check if variables are loaded
-console.log('DB_USER:', process.env.DB_USER);
-console.log('DB_HOST:', process.env.DB_HOST);
+// Debug what's being loaded
+console.log('DB Configuration:');
+console.log('- Environment:', process.env.NODE_ENV);
+console.log('- Host:', process.env.DB_HOST);
+console.log('- User:', process.env.DB_USER); 
 
 const pool = new Pool({
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || 5432,
-  database: process.env.DB_NAME || 'ufc_dashboard',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || '',
-  ssl: {
-    rejectUnauthorized: false
-  }
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_NAME,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
-// Verify connection
-pool.query('SELECT NOW()', (err, res) => {
-  if (err) {
-    console.error('Database connection error', err);
-  } else {
-    console.log('Database connected at', res.rows[0].now);
-  }
-});
+
+
 
 module.exports = pool;
