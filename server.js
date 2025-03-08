@@ -1,20 +1,21 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
+const config = require('./src/config');
+const errorHandler = require('./src/middleware/errorHandler');
 
-const users = require("./src/routes/userRoutes");
+// Routes
+const fighterRoutes = require("./src/routes/fighterRoutes");
 
 const app = express();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/users", users);
+// Routes
+app.use("/api/fighters", fighterRoutes);
 
-// Error Handling Middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ error: "Something went wrong!" });
-});
+// Error Handling
+app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(config.port, () => console.log(`Server running on port ${config.port}`));

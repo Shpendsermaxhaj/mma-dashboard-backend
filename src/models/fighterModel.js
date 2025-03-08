@@ -1,6 +1,5 @@
-const { validationResult } = require("express-validator");
-
-const mockFighters = [
+// Mock data could be placed here instead of in the controller
+const fighters = [
     {
         "id": 1,
         "name": "Jon Jones",
@@ -161,30 +160,18 @@ const mockFighters = [
         "kos": 9,
         "submissions": 7
     }
-];
+]
 
 
-// Get all fighters
-exports.getFighters = (req, res) => {
-    try {
-        res.json(mockFighters);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch fighters" });
-    }
+const getAll = () => {
+    return fighters;
 };
 
-// Get fighter by ID with validation
-exports.getFighterById = (req, res) => {
-    try {
-        const id = parseInt(req.params.id);
-        const fighter = mockFighters.find((f) => f.id === id);
+const getById = (id) => {
+    return fighters.find(fighter => fighter.id === parseInt(id));
+};
 
-        if (!fighter) {
-            return res.status(404).json({ error: "Fighter not found" });
-        }
-
-        res.json(fighter);
-    } catch (error) {
-        res.status(500).json({ error: "Error retrieving fighter" });
-    }
+module.exports = {
+    getAll,
+    getById
 };
