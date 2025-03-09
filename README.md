@@ -10,8 +10,6 @@ A robust RESTful API backend for the UFC Dashboard application that provides com
 - [Environment Configuration](#-environment-configuration)
 - [API Endpoints](#-api-endpoints)
 - [Project Structure](#-project-structure)
-- [Deployment](#-deployment)
-- [Troubleshooting](#-troubleshooting)
 
 ## ✨ Features
 - Fighter profile management (create, read, update, delete)
