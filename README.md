@@ -128,22 +128,7 @@ mma-dashboard-backend/
         └── insertDemoData.js     # Demo data script
 ```
 
-## 🌐 Deployment
-This backend is designed to be deployed on Render.com:
-1. Create a new Web Service on the Render dashboard
-2. Connect your GitHub repository
-3. Configure build settings:
-   - Build Command: `npm install`
-   - Start Command: `node server.js`
-4. Add environment variables in the Render dashboard (same as in `.env.production`)
-5. Enable Auto-Deploy for continuous deployment
-
-The application automatically configures SSL for database connections in production mode.
-
-
 
 ## 📄 License
-MIT
-
 Made with ❤️ by Shpend Sermaxhaj
 
