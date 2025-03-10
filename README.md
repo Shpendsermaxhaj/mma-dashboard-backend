@@ -71,7 +71,7 @@ npm run dev
 # Production mode
 npm run prod
 
-# Default (development) mode
+# Default mode
 npm start
 ```
 
@@ -80,7 +80,7 @@ The application uses environment-specific configuration files:
 - `.env` - Development settings
 - `.env.production` - Production settings
 
-Production configuration for Render.com:
+Production configuration example:
 ```
 NODE_ENV=production
 DB_HOST=dpg-cv65p2ogph6c73dka9ug-a.frankfurt-postgres.render.com
@@ -111,14 +111,13 @@ mma-dashboard-backend/
 ├── package.json          # Project dependencies and scripts
 └── src/
     ├── config/           # Configuration files
-    │   └── db.js         # Database connection setup
+    │   └── config.js     # Environment configuration setup
     ├── controllers/      # Request handlers
-    │   ├── fighterController.js  # Fighter CRUD operations
-    │   └── userController.js     # User-related operations
+    │   └── fighterController.js  # Fighter CRUD operations
     ├── models/           # Database models
     │   └── fighterModel.js       # Fighter data model
     ├── routes/           # API routes
-    │   └── userRoutes.js         # User/Fighter routes
+    │   └── fighterRoutes.js      # Fighter endpoints
     ├── services/         # Business logic
     │   └── fighterService.js     # Fighter service layer
     └── utils/            # Utility functions
@@ -126,7 +125,5 @@ mma-dashboard-backend/
         └── insertDemoData.js     # Demo data script
 ```
 
-
 ## 📄 License
 Made with ❤️ by Shpend Sermaxhaj
-
