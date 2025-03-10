@@ -21,7 +21,7 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', environment: config.nodeEnv });
 });
 
-// Use the centralized error handler middleware
+// Error Handling Middleware
 app.use(errorHandler);
 
 // Initialize database and start server
