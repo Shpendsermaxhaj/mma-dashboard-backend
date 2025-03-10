@@ -1,26 +1,19 @@
 const { Pool } = require('pg');
-const dotenv = require('dotenv');
-const path = require('path');
+const config = require('./config');
 
-const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env';
-dotenv.config({ path: path.resolve(__dirname, '../../', envFile) });
-
-// Debug what's being loaded
+// Debug what's being loaded (optional)
 console.log('DB Configuration:');
-console.log('- Environment:', process.env.NODE_ENV);
-console.log('- Host:', process.env.DB_HOST);
-console.log('- User:', process.env.DB_USER); 
+console.log('- Environment:', config.nodeEnv);
+console.log('- Host:', config.db.host);
+console.log('- User:', config.db.user); 
 
 const pool = new Pool({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+  host: config.db.host,
+  port: config.db.port,
+  database: config.db.database,
+  user: config.db.user,
+  password: config.db.password,
+  ssl: config.db.ssl
 });
-
-
-
 
 module.exports = pool;
